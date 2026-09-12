@@ -104,6 +104,11 @@ export default function Hero() {
               <a
                 href="#contact"
                 className="inline-flex items-center gap-2 rounded-sm border border-line px-5 py-2.5 text-sm transition hover:border-ink dark:border-dark-line dark:hover:border-paper/50"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                  setTimeout(() => { document.getElementById("from_name")?.focus(); }, 600);
+                }}
               >
                 Start a Project
               </a>

@@ -77,6 +77,14 @@ export default function Navbar({ dark, setDark }) {
           <a
             href="#contact"
             className="hidden rounded-sm bg-ink px-3.5 py-1.5 text-[13px] font-medium text-paper transition hover:bg-accent dark:bg-paper dark:text-ink md:inline"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+              // Focus the first input after scroll
+              setTimeout(() => {
+                document.getElementById("from_name")?.focus();
+              }, 600);
+            }}
           >
             Start a project
           </a>

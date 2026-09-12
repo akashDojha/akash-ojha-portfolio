@@ -2,7 +2,7 @@ import { Briefcase, Code2, Globe, MapPin } from "lucide-react";
 import { site } from "../data/site";
 
 const quickFacts = [
-  { icon: Briefcase, label: "Experience", value: "5.5+ years" },
+  { icon: Briefcase, label: "Experience", value: "6+ years" },
   { icon: Code2,     label: "Websites",   value: "40+ built & maintained" },
   { icon: Globe,     label: "Stack",       value: "Backend & Frontend" },
   { icon: MapPin,    label: "Location",    value: site.location },
@@ -39,7 +39,7 @@ export default function About() {
             <div className="space-y-5 text-[15.5px] leading-[1.85] text-muted dark:text-dark-muted">
               <p>
                 I'm Akash Ojha, a Full-Stack WordPress Developer with{" "}
-                <span className="font-medium text-ink dark:text-paper">{site.experienceYears} years</span> of
+                <span className="font-medium text-ink dark:text-paper">6+ years</span> of
                 experience building custom WordPress websites and digital solutions.
               </p>
               <p>

@@ -22,7 +22,7 @@ export default function Footer() {
               </div>
             </div>
             <p className="mt-3 max-w-sm text-xs leading-relaxed text-muted dark:text-dark-muted">
-              5.5+ years building custom WordPress websites, plugins, themes, WooCommerce
+              6+ years building custom WordPress websites, plugins, themes, WooCommerce
               platforms and API integrations. Based in {site.location}.
             </p>
           </div>

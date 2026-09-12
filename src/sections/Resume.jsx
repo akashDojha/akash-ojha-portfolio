@@ -24,7 +24,7 @@ export default function Resume() {
             </p>
             {/* Quick facts */}
             <div className="mt-5 flex flex-wrap gap-2">
-              {["Full-Stack WordPress Developer", "5.5+ years", "Ahmedabad, India", "Available for freelance"].map(
+              {["Full-Stack WordPress Developer", "6+ years", "Ahmedabad, India", "Available for freelance"].map(
                 (fact) => (
                   <span
                     key={fact}
