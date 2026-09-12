@@ -109,80 +109,96 @@ export default function Contact() {
     setStatus(SENDING);
     setErrorMsg("");
 
+    const clientName = form.name.split(" ")[0];
+
+    // ── Email 1: notify Akash ──────────────────────────────────────────────
+    const notifyPayload = {
+      access_key: WEB3FORMS_KEY,
+      subject: `[Portfolio Enquiry] ${form.subject || "New message from " + form.name}`,
+      from_name: form.name,
+      replyto: form.email,
+      message: [
+        "NEW PORTFOLIO ENQUIRY",
+        "─────────────────────────────────────",
+        `Name:     ${form.name}`,
+        `Email:    ${form.email}`,
+        `Service:  ${form.service || "Not specified"}`,
+        `Subject:  ${form.subject || "—"}`,
+        "",
+        "Message:",
+        form.message,
+        "",
+        "─────────────────────────────────────",
+        "Hit Reply to respond directly to the client.",
+      ].join("\n"),
+      botcheck: "",
+    };
+
+    // ── Email 2: thank-you to client ───────────────────────────────────────
+    const thankYouPayload = {
+      access_key: WEB3FORMS_KEY,
+      subject: `Thanks for reaching out, ${clientName}! — Akash Ojha`,
+      // send TO the client's email address
+      to: form.email,
+      from_name: "Akash Ojha",
+      replyto: "ojhaakash1996@gmail.com",
+      message: [
+        `Hi ${clientName},`,
+        "",
+        "Thank you for getting in touch! I've received your message and will get back to you within 24 hours.",
+        "",
+        "Here's a summary of your enquiry:",
+        "─────────────────────────────────────",
+        `  Service:  ${form.service || "Not specified"}`,
+        `  Subject:  ${form.subject || "—"}`,
+        "",
+        "  Your message:",
+        `  ${form.message.split("\n").join("\n  ")}`,
+        "─────────────────────────────────────",
+        "",
+        "Feel free to connect with me on LinkedIn:",
+        "https://www.linkedin.com/in/akash-ojha-6a825b129/",
+        "",
+        "Best regards,",
+        "Akash Ojha",
+        "Full-Stack WordPress Developer",
+        "✉  ojhaakash1996@gmail.com",
+        "📞 +91 8673877639",
+        "🌐 https://akashdojha.github.io/akash-ojha-portfolio/",
+      ].join("\n"),
+      botcheck: "",
+    };
+
     try {
-      const clientName = form.name.split(" ")[0];
+      // Send both emails in parallel
+      const [notifyRes, thankYouRes] = await Promise.all([
+        fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(notifyPayload),
+        }),
+        fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(thankYouPayload),
+        }),
+      ]);
 
-      const payload = {
-        access_key: WEB3FORMS_KEY,
+      const [notifyData, thankYouData] = await Promise.all([
+        notifyRes.json(),
+        thankYouRes.json(),
+      ]);
 
-        // Your inbox notification
-        subject: `[Portfolio Enquiry] ${form.subject || "New message from " + form.name}`,
-        from_name: form.name,
-        replyto: form.email,
-        message: [
-          "NEW PORTFOLIO ENQUIRY",
-          "─────────────────────────────",
-          `Name:    ${form.name}`,
-          `Email:   ${form.email}`,
-          `Service: ${form.service || "Not specified"}`,
-          `Subject: ${form.subject || "—"}`,
-          "",
-          "Message:",
-          form.message,
-          "",
-          "─────────────────────────────",
-          "Reply directly to this email to respond to the client.",
-        ].join("\n"),
-
-        // Auto-reply thank you email to client
-        autoresponse: "true",
-        autoresponse_subject: `Thanks for reaching out, ${clientName}! — Akash Ojha`,
-        autoresponse_message: [
-          `Hi ${clientName},`,
-          "",
-          "Thank you for getting in touch! I've received your message and will get back to you within 24 hours.",
-          "",
-          "Here's a summary of your enquiry:",
-          "─────────────────────────────",
-          `Service:  ${form.service || "Not specified"}`,
-          `Subject:  ${form.subject || "—"}`,
-          "",
-          "Your message:",
-          form.message,
-          "─────────────────────────────",
-          "",
-          "In the meantime, feel free to connect with me on LinkedIn:",
-          "https://www.linkedin.com/in/akash-ojha-6a825b129/",
-          "",
-          "Best regards,",
-          "Akash Ojha",
-          "Full-Stack WordPress Developer",
-          "✉  ojhaakash1996@gmail.com",
-          "📞 +91 8673877639",
-          "🌐 https://akashdojha.github.io/akash-ojha-portfolio/",
-        ].join("\n"),
-
-        // honeypot
-        botcheck: "",
-      };
-
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await res.json();
-
-      if (data.success) {
+      // At minimum the notification to Akash must succeed
+      if (notifyData.success) {
         setStatus(SENT);
         setForm({ name: "", email: "", service: "", subject: "", message: "" });
       } else {
-        throw new Error(data.message || "Submission failed");
+        throw new Error(notifyData.message || "Submission failed");
       }
     } catch (err) {
       setStatus(ERROR);
-      setErrorMsg(err.message || "Something went wrong");
+      setErrorMsg(err.message || "Something went wrong. Please try again.");
     }
   };
 
