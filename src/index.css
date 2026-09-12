@@ -1,0 +1,208 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+  --color-ink: #12151a;
+  --color-paper: #f4f1ea;
+  --color-muted: #5c6158;
+  --color-line: #d8d3c8;
+  --color-accent: #2f6b4f;
+  --color-accent-2: #c46b2d;
+  --color-dark: #0d1014;
+  --color-dark-card: #141820;
+  --color-dark-line: #252d35;
+  --color-dark-muted: #9aa194;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.dark body,
+.dark {
+  background: var(--color-dark);
+  color: #eceae4;
+}
+
+/* ─── Grid background ─── */
+.grid-bg {
+  background-image:
+    linear-gradient(to right, rgb(18 21 26 / 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(18 21 26 / 0.055) 1px, transparent 1px);
+  background-size: 52px 52px;
+}
+
+.dark .grid-bg {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.038) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.038) 1px, transparent 1px);
+}
+
+/* ─── Section kicker ─── */
+.section-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.dark .section-kicker {
+  color: #7db89a;
+}
+
+/* ─── Display font shorthand ─── */
+.display {
+  font-family: var(--font-display);
+}
+
+/* ─── Code panel ─── */
+.code-panel {
+  font-family: var(--font-mono);
+  font-size: 0.77rem;
+  line-height: 1.75;
+}
+
+/* ─── Selection ─── */
+::selection {
+  background: #2f6b4f;
+  color: #fff;
+}
+
+/* ─── Skill pill ─── */
+.skill-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.15rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid var(--color-line);
+  background: #ffffff;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.dark .skill-pill {
+  border-color: var(--color-dark-line);
+  background: var(--color-dark-card);
+}
+
+/* ─── Fade-in-up animation ─── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.55s ease both;
+}
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+
+/* ─── Stat number ─── */
+.stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  line-height: 1;
+  color: var(--color-ink);
+}
+
+.dark .stat-number {
+  color: #eceae4;
+}
+
+/* ─── Tag ─── */
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.15rem;
+  border: 1px solid var(--color-line);
+}
+
+.dark .tag {
+  border-color: var(--color-dark-line);
+}
+
+/* ─── Card hover lift ─── */
+.card-hover {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px -8px rgb(0 0 0 / 0.12);
+}
+
+.dark .card-hover:hover {
+  box-shadow: 0 12px 36px -8px rgb(0 0 0 / 0.5);
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+  border-radius: 3px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--color-dark-line);
+}
+
+/* ─── Backend/frontend badge strip ─── */
+.badge-be {
+  background: rgb(47 107 79 / 0.12);
+  color: var(--color-accent);
+  border: 1px solid rgb(47 107 79 / 0.25);
+}
+
+.dark .badge-be {
+  background: rgb(47 107 79 / 0.18);
+  color: #8fbfa4;
+  border-color: rgb(47 107 79 / 0.3);
+}
+
+.badge-fe {
+  background: rgb(196 107 45 / 0.1);
+  color: var(--color-accent-2);
+  border: 1px solid rgb(196 107 45 / 0.25);
+}
+
+.dark .badge-fe {
+  background: rgb(196 107 45 / 0.15);
+  color: #e0914a;
+  border-color: rgb(196 107 45 / 0.3);
+}

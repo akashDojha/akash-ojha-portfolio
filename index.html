@@ -1,0 +1,123 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO -->
+    <title>Akash Ojha | Full-Stack WordPress Developer | PHP, WooCommerce &amp; Custom Plugins</title>
+    <meta
+      name="description"
+      content="Akash Ojha is a Full-Stack WordPress Developer with 6+ years of experience in custom WordPress development, PHP, WooCommerce, plugins, themes, APIs and frontend development."
+    />
+    <meta name="author" content="Akash Ojha" />
+    <meta name="keywords" content="WordPress Developer, Full-Stack WordPress, Custom Plugin Development, Custom Theme Development, WooCommerce Developer, PHP Developer, API Integration, Ahmedabad" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://[ADD-SITE-URL]/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Akash Ojha â€” Full-Stack WordPress Developer" />
+    <meta property="og:title" content="Akash Ojha | Full-Stack WordPress Developer | PHP, WooCommerce &amp; Custom Plugins" />
+    <meta
+      property="og:description"
+      content="Akash Ojha is a Full-Stack WordPress Developer with 6+ years of experience in custom WordPress development, PHP, WooCommerce, plugins, themes, APIs and frontend development."
+    />
+    <meta property="og:url" content="https://[ADD-SITE-URL]/" />
+    <meta property="og:image" content="https://[ADD-SITE-URL]/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Akash Ojha | Full-Stack WordPress Developer" />
+    <meta
+      name="twitter:description"
+      content="6+ years building custom WordPress websites, WooCommerce platforms, custom plugins, themes, APIs and complex business solutions."
+    />
+    <meta name="twitter:image" content="https://[ADD-SITE-URL]/og-image.png" />
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Akash Ojha",
+        "jobTitle": "Full-Stack WordPress Developer",
+        "description": "Full-Stack WordPress Developer with 6+ years of experience in custom WordPress development, PHP, WooCommerce, plugins, themes and API integration.",
+        "email": "mailto:ojhaakash1996@gmail.com",
+        "telephone": "+91-8673877639",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Ahmedabad",
+          "addressRegion": "Gujarat",
+          "addressCountry": "IN"
+        },
+        "sameAs": [
+          "https://www.linkedin.com/in/akash-ojha-6a825b129/"
+        ],
+        "knowsAbout": [
+          "WordPress",
+          "WooCommerce",
+          "PHP",
+          "Custom Plugin Development",
+          "Custom Theme Development",
+          "REST API",
+          "JavaScript",
+          "MySQL"
+        ]
+      }
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- GitHub Pages SPA: restore URL from 404.html redirect -->
+    <script>
+      (function () {
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, null, redirect);
+        }
+        // Also handle the ?p= query param from 404.html
+        var l = window.location;
+        if (l.search.indexOf('?p=') === 0) {
+          var decoded = l.search.slice(1)
+            .split('&').map(function (s) { return s.replace(/~and~/g, '&'); });
+          window.history.replaceState(
+            null, null,
+            l.pathname.split('/').slice(0, -decoded[0].slice(2).split('/').length).join('/')
+              + decoded[0].slice(2)
+              + (decoded[1] ? '?' + decoded[1].slice(2) : '')
+              + l.hash
+          );
+        }
+      })();
+    </script>
+
+    <!-- Inline theme initialisation â€” prevents flash of wrong theme -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("ao-theme");
+          var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var dark = stored ? stored === "dark" : prefersDark;
+          if (dark) document.documentElement.classList.add("dark");
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+
