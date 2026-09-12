@@ -13,11 +13,18 @@ import { useState } from "react";
 import { site } from "../data/site";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Web3Forms — free, no backend, emails go straight to ojhaakash1996@gmail.com
-// Access key is already set below. It is a PUBLIC key — safe to commit.
-// Source: https://web3forms.com  (free tier: 250 emails/month)
+// Formspree endpoint — handles:
+//   1. Email notification → ojhaakash1996@gmail.com
+//   2. Auto-reply "Thank you" → client's email (native Formspree feature)
+//
+// Setup (3 minutes, free):
+//   1. Go to https://formspree.io → Sign up with ojhaakash1996@gmail.com
+//   2. Click "New Form" → name it "Portfolio Contact"
+//   3. Copy the endpoint URL e.g. https://formspree.io/f/xyzabcde
+//   4. Replace FORMSPREE_ENDPOINT below with that URL
+//   5. In Formspree dashboard → Form Settings → enable "Send confirmation email to submitter"
 // ─────────────────────────────────────────────────────────────────────────────
-const WEB3FORMS_KEY = "da76f4f0-fd85-4f3a-99da-9074c1659390";
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xpwzgwgn"; // ← your endpoint here
 
 const SERVICES = [
   "Custom WordPress Development",
@@ -91,6 +98,7 @@ function ContactInfoCard({ label, Icon, value, href, external }) {
 export default function Contact() {
   const [status, setStatus] = useState(IDLE);
   const [errorMsg, setErrorMsg] = useState("");
+  const [sentEmail, setSentEmail] = useState("");
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -111,90 +119,42 @@ export default function Contact() {
 
     const clientName = form.name.split(" ")[0];
 
-    // ── Email 1: notify Akash ──────────────────────────────────────────────
-    const notifyPayload = {
-      access_key: WEB3FORMS_KEY,
-      subject: `[Portfolio Enquiry] ${form.subject || "New message from " + form.name}`,
-      from_name: form.name,
-      replyto: form.email,
-      message: [
-        "NEW PORTFOLIO ENQUIRY",
-        "─────────────────────────────────────",
-        `Name:     ${form.name}`,
-        `Email:    ${form.email}`,
-        `Service:  ${form.service || "Not specified"}`,
-        `Subject:  ${form.subject || "—"}`,
-        "",
-        "Message:",
-        form.message,
-        "",
-        "─────────────────────────────────────",
-        "Hit Reply to respond directly to the client.",
-      ].join("\n"),
-      botcheck: "",
-    };
-
-    // ── Email 2: thank-you to client ───────────────────────────────────────
-    const thankYouPayload = {
-      access_key: WEB3FORMS_KEY,
-      subject: `Thanks for reaching out, ${clientName}! — Akash Ojha`,
-      // send TO the client's email address
-      to: form.email,
-      from_name: "Akash Ojha",
-      replyto: "ojhaakash1996@gmail.com",
-      message: [
-        `Hi ${clientName},`,
-        "",
-        "Thank you for getting in touch! I've received your message and will get back to you within 24 hours.",
-        "",
-        "Here's a summary of your enquiry:",
-        "─────────────────────────────────────",
-        `  Service:  ${form.service || "Not specified"}`,
-        `  Subject:  ${form.subject || "—"}`,
-        "",
-        "  Your message:",
-        `  ${form.message.split("\n").join("\n  ")}`,
-        "─────────────────────────────────────",
-        "",
-        "Feel free to connect with me on LinkedIn:",
-        "https://www.linkedin.com/in/akash-ojha-6a825b129/",
-        "",
-        "Best regards,",
-        "Akash Ojha",
-        "Full-Stack WordPress Developer",
-        "✉  ojhaakash1996@gmail.com",
-        "📞 +91 8673877639",
-        "🌐 https://akashdojha.github.io/akash-ojha-portfolio/",
-      ].join("\n"),
-      botcheck: "",
+    // Formspree sends notification to Akash automatically.
+    // The confirmation email to the CLIENT is handled by Formspree's
+    // "Confirmation email" plugin — enable it in your Formspree dashboard:
+    // Dashboard → your form → Plugins tab → "Confirmation email" → Enable
+    // Set "Reply to field" = email, customize the message there.
+    //
+    // _replyto tells Formspree who the submitter is (used for confirmation).
+    const payload = {
+      _replyto: form.email,
+      _subject: `[Portfolio Enquiry] ${form.subject || "New message from " + form.name}`,
+      name: form.name,
+      email: form.email,
+      service: form.service || "Not specified",
+      subject: form.subject || "—",
+      message: form.message,
     };
 
     try {
-      // Send both emails in parallel
-      const [notifyRes, thankYouRes] = await Promise.all([
-        fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify(notifyPayload),
-        }),
-        fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify(thankYouPayload),
-        }),
-      ]);
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-      const [notifyData, thankYouData] = await Promise.all([
-        notifyRes.json(),
-        thankYouRes.json(),
-      ]);
+      const data = await res.json();
 
-      // At minimum the notification to Akash must succeed
-      if (notifyData.success) {
+      if (res.ok) {
+        setSentEmail(form.email);
         setStatus(SENT);
         setForm({ name: "", email: "", service: "", subject: "", message: "" });
       } else {
-        throw new Error(notifyData.message || "Submission failed");
+        throw new Error(
+          (data.errors && data.errors.map((err) => err.message).join(", ")) ||
+            data.error ||
+            "Submission failed"
+        );
       }
     } catch (err) {
       setStatus(ERROR);
@@ -203,7 +163,7 @@ export default function Contact() {
   };
 
   const inputClass =
-    "w-full rounded-sm border border-line bg-paper px-3.5 py-2.5 text-sm outline-none transition placeholder:text-muted/40 focus:border-ink focus:ring-0 dark:border-dark-line dark:bg-dark dark:text-paper dark:placeholder:text-dark-muted/50 dark:focus:border-paper/50";
+    "w-full rounded-sm border border-line bg-paper px-3.5 py-2.5 text-sm outline-none transition placeholder:text-muted/40 focus:border-ink dark:border-dark-line dark:bg-dark dark:text-paper dark:placeholder:text-dark-muted/50 dark:focus:border-paper/50";
 
   const labelClass =
     "mb-1.5 block font-mono text-[10px] uppercase tracking-wider text-muted dark:text-dark-muted";
@@ -233,7 +193,7 @@ export default function Contact() {
               </span>
             </div>
 
-            {/* Quick CTA buttons */}
+            {/* CTAs */}
             <div className="mt-6 flex flex-wrap gap-3">
               <a
                 href="mailto:ojhaakash1996@gmail.com?subject=WordPress%20Project%20Enquiry"
@@ -254,7 +214,7 @@ export default function Contact() {
               </a>
             </div>
 
-            {/* Contact info cards */}
+            {/* Contact info */}
             <div className="mt-8 space-y-2.5">
               {CONTACT_INFO.map((item) => (
                 <ContactInfoCard key={item.label} {...item} />
@@ -264,7 +224,7 @@ export default function Contact() {
 
           {/* ── Right column: form ── */}
           <div className="overflow-hidden rounded-md border border-line bg-white dark:border-dark-line dark:bg-dark-card">
-            {/* Form header */}
+            {/* Header */}
             <div className="border-b border-line bg-paper px-6 py-4 dark:border-dark-line dark:bg-dark">
               <p className="font-mono text-[9px] uppercase tracking-widest text-muted dark:text-dark-muted">
                 Send a message
@@ -272,7 +232,7 @@ export default function Contact() {
               <p className="mt-0.5 text-base font-semibold">Start a project with Akash</p>
             </div>
 
-            {/* ── Success state ── */}
+            {/* Success */}
             {status === SENT ? (
               <div className="flex flex-col items-center justify-center gap-4 px-6 py-16 text-center">
                 <div className="grid h-16 w-16 place-items-center rounded-full bg-accent/10">
@@ -281,24 +241,23 @@ export default function Contact() {
                 <div>
                   <p className="text-lg font-semibold">Message sent!</p>
                   <p className="mt-2 text-sm leading-relaxed text-muted dark:text-dark-muted">
-                    Thanks for reaching out. I'll get back to you at{" "}
-                    <span className="font-medium">{form.email || "your email"}</span> within 24
-                    hours.
+                    Thanks for reaching out. A confirmation has been sent to{" "}
+                    <span className="font-medium text-ink dark:text-paper">{sentEmail}</span>.
+                    I'll reply within 24 hours.
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={() => setStatus(IDLE)}
-                  className="mt-2 rounded-sm border border-line px-5 py-2 text-sm transition hover:border-ink dark:border-dark-line dark:hover:border-paper/40"
+                  className="mt-2 rounded-sm border border-line px-5 py-2 text-sm transition hover:border-ink dark:border-dark-line"
                 >
                   Send another message
                 </button>
               </div>
             ) : (
-              /* ── Form ── */
               <form onSubmit={handleSubmit} noValidate className="space-y-4 p-6">
-                {/* Honeypot (hidden, catches bots) */}
-                <input type="checkbox" name="botcheck" className="hidden" readOnly />
+                {/* Honeypot */}
+                <input type="text" name="_gotcha" className="hidden" readOnly />
 
                 {/* Name + Email */}
                 <div className="grid gap-4 sm:grid-cols-2">
@@ -390,14 +349,14 @@ export default function Contact() {
                   />
                 </div>
 
-                {/* Error banner */}
+                {/* Error */}
                 {status === ERROR && (
                   <div className="flex items-start gap-2.5 rounded-sm border border-red-200 bg-red-50 px-3.5 py-3 text-sm text-red-700 dark:border-red-900/40 dark:bg-red-950/30 dark:text-red-400">
                     <XCircle size={15} className="mt-0.5 shrink-0" />
                     <div>
                       <p className="font-medium">Could not send message.</p>
                       <p className="mt-0.5 text-xs opacity-80">
-                        {errorMsg} — please email me directly at ojhaakash1996@gmail.com
+                        {errorMsg} — or email me directly at ojhaakash1996@gmail.com
                       </p>
                     </div>
                   </div>
@@ -433,15 +392,3 @@ export default function Contact() {
     </section>
   );
 }
-
-/*
- * ─────────────────────────────────────────────────────────────────────────────
- * HOW TO CONNECT YOUR GMAIL (5 minutes, free):
- *
- * 1. Go to https://web3forms.com
- * 2. Enter your email: ojhaakash1996@gmail.com  → click "Create Access Key"
- * 3. Check your Gmail inbox → copy the Access Key (looks like: xxxxxxxx-xxxx-...)
- * 4. Replace "YOUR_WEB3FORMS_KEY" at the top of this file with that key
- * 5. Save → commit → push → done. Every form submission arrives in your Gmail.
- * ─────────────────────────────────────────────────────────────────────────────
- */
