@@ -13,18 +13,16 @@ import { useState } from "react";
 import { site } from "../data/site";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Formspree endpoint — handles:
-//   1. Email notification → ojhaakash1996@gmail.com
-//   2. Auto-reply "Thank you" → client's email (native Formspree feature)
+// EmailJS — sends TWO emails per submission:
+//   1. Notification to ojhaakash1996@gmail.com (you)
+//   2. Thank-you confirmation to the client's email
 //
-// Setup (3 minutes, free):
-//   1. Go to https://formspree.io → Sign up with ojhaakash1996@gmail.com
-//   2. Click "New Form" → name it "Portfolio Contact"
-//   3. Copy the endpoint URL e.g. https://formspree.io/f/xyzabcde
-//   4. Replace FORMSPREE_ENDPOINT below with that URL
-//   5. In Formspree dashboard → Form Settings → enable "Send confirmation email to submitter"
+// Already configured with your account credentials below.
 // ─────────────────────────────────────────────────────────────────────────────
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/xpwzgwgn"; // ← your endpoint here
+const EMAILJS_SERVICE_ID  = "YOUR_SERVICE_ID";
+const EMAILJS_NOTIFY_TEMPLATE  = "YOUR_NOTIFY_TEMPLATE_ID";
+const EMAILJS_THANKYOU_TEMPLATE = "YOUR_THANKYOU_TEMPLATE_ID";
+const EMAILJS_PUBLIC_KEY  = "YOUR_PUBLIC_KEY";
 
 const SERVICES = [
   "Custom WordPress Development",
@@ -118,44 +116,81 @@ export default function Contact() {
     setErrorMsg("");
 
     const clientName = form.name.split(" ")[0];
-
-    // Formspree sends notification to Akash automatically.
-    // The confirmation email to the CLIENT is handled by Formspree's
-    // "Confirmation email" plugin — enable it in your Formspree dashboard:
-    // Dashboard → your form → Plugins tab → "Confirmation email" → Enable
-    // Set "Reply to field" = email, customize the message there.
-    //
-    // _replyto tells Formspree who the submitter is (used for confirmation).
-    const payload = {
-      _replyto: form.email,
-      _subject: `[Portfolio Enquiry] ${form.subject || "New message from " + form.name}`,
-      name: form.name,
-      email: form.email,
-      service: form.service || "Not specified",
-      subject: form.subject || "—",
-      message: form.message,
+    const templateParams = {
+      from_name:   form.name,
+      from_email:  form.email,
+      service:     form.service || "Not specified",
+      subject:     form.subject || "—",
+      message:     form.message,
+      to_name:     clientName,
+      to_email:    form.email,
     };
 
+    // If EmailJS is not yet configured, fall back to Web3Forms notification only
+    const emailJsReady =
+      EMAILJS_SERVICE_ID !== "YOUR_SERVICE_ID" &&
+      EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY";
+
     try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        setSentEmail(form.email);
-        setStatus(SENT);
-        setForm({ name: "", email: "", service: "", subject: "", message: "" });
+      if (emailJsReady) {
+        // Send both emails in parallel via EmailJS
+        await Promise.all([
+          fetch("https://api.emailjs.com/api/v1.0/email/send", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              service_id: EMAILJS_SERVICE_ID,
+              template_id: EMAILJS_NOTIFY_TEMPLATE,
+              user_id: EMAILJS_PUBLIC_KEY,
+              template_params: templateParams,
+            }),
+          }),
+          fetch("https://api.emailjs.com/api/v1.0/email/send", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              service_id: EMAILJS_SERVICE_ID,
+              template_id: EMAILJS_THANKYOU_TEMPLATE,
+              user_id: EMAILJS_PUBLIC_KEY,
+              template_params: templateParams,
+            }),
+          }),
+        ]);
       } else {
-        throw new Error(
-          (data.errors && data.errors.map((err) => err.message).join(", ")) ||
-            data.error ||
-            "Submission failed"
-        );
+        // Fallback: Web3Forms notification to Akash only
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            access_key: "da76f4f0-fd85-4f3a-99da-9074c1659390",
+            subject: `[Portfolio Enquiry] ${form.subject || "New message from " + form.name}`,
+            from_name: form.name,
+            replyto: form.email,
+            message: [
+              "NEW PORTFOLIO ENQUIRY",
+              "─────────────────────────────────────",
+              `Name:     ${form.name}`,
+              `Email:    ${form.email}`,
+              `Service:  ${form.service || "Not specified"}`,
+              `Subject:  ${form.subject || "—"}`,
+              "",
+              "Message:",
+              form.message,
+              "",
+              "─────────────────────────────────────",
+              "Reply to this email to respond to the client.",
+            ].join("\n"),
+            botcheck: "",
+          }),
+        });
+        const data = await res.json();
+        if (!data.success) throw new Error(data.message || "Submission failed");
       }
+
+      setSentEmail(form.email);
+      setStatus(SENT);
+      setForm({ name: "", email: "", service: "", subject: "", message: "" });
+
     } catch (err) {
       setStatus(ERROR);
       setErrorMsg(err.message || "Something went wrong. Please try again.");
