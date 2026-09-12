@@ -110,12 +110,58 @@ export default function Contact() {
     setErrorMsg("");
 
     try {
+      const clientName = form.name.split(" ")[0];
+
       const payload = {
         access_key: WEB3FORMS_KEY,
-        subject: form.subject || `WordPress enquiry from ${form.name}`,
+
+        // Your inbox notification
+        subject: `[Portfolio Enquiry] ${form.subject || "New message from " + form.name}`,
         from_name: form.name,
-        email: form.email,
-        message: `Service: ${form.service || "Not specified"}\n\n${form.message}`,
+        replyto: form.email,
+        message: [
+          "NEW PORTFOLIO ENQUIRY",
+          "─────────────────────────────",
+          `Name:    ${form.name}`,
+          `Email:   ${form.email}`,
+          `Service: ${form.service || "Not specified"}`,
+          `Subject: ${form.subject || "—"}`,
+          "",
+          "Message:",
+          form.message,
+          "",
+          "─────────────────────────────",
+          "Reply directly to this email to respond to the client.",
+        ].join("\n"),
+
+        // Auto-reply thank you email to client
+        autoresponse: "true",
+        autoresponse_subject: `Thanks for reaching out, ${clientName}! — Akash Ojha`,
+        autoresponse_message: [
+          `Hi ${clientName},`,
+          "",
+          "Thank you for getting in touch! I've received your message and will get back to you within 24 hours.",
+          "",
+          "Here's a summary of your enquiry:",
+          "─────────────────────────────",
+          `Service:  ${form.service || "Not specified"}`,
+          `Subject:  ${form.subject || "—"}`,
+          "",
+          "Your message:",
+          form.message,
+          "─────────────────────────────",
+          "",
+          "In the meantime, feel free to connect with me on LinkedIn:",
+          "https://www.linkedin.com/in/akash-ojha-6a825b129/",
+          "",
+          "Best regards,",
+          "Akash Ojha",
+          "Full-Stack WordPress Developer",
+          "✉  ojhaakash1996@gmail.com",
+          "📞 +91 8673877639",
+          "🌐 https://akashdojha.github.io/akash-ojha-portfolio/",
+        ].join("\n"),
+
         // honeypot
         botcheck: "",
       };
