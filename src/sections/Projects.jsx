@@ -7,11 +7,11 @@ export default function Projects() {
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-5 sm:py-20">
         <p className="section-kicker">05 — Selected professional work</p>
         <h2 className="display mt-3 max-w-3xl text-[clamp(1.85rem,5vw,2.75rem)] leading-tight">
-          Live WordPress functionality I contributed to as a developer.
+          WordPress functionality delivered across professional builds.
         </h2>
         <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted dark:text-dark-muted">
-          Focused on features and delivery — catalogues, commerce flows, event tooling, enquiry
-          systems and responsive WordPress builds. Client brand names are intentionally not listed.
+          Focused on what was built — catalogues, commerce flows, event tooling, enquiry systems and
+          responsive WordPress delivery. No client names, screenshots or external project links.
         </p>
 
         <div className="mt-10 grid gap-5 sm:gap-6 md:grid-cols-2">

@@ -1,4 +1,3 @@
-import { ArrowUpRight } from "lucide-react";
 import { projects } from "../data/projects";
 
 export default function CaseStudies() {
@@ -7,10 +6,10 @@ export default function CaseStudies() {
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-5 sm:py-20">
         <p className="section-kicker">06 — Project notes</p>
         <h2 className="display mt-3 text-[clamp(1.85rem,5vw,2.75rem)]">
-          What these live builds actually do
+          Functionality delivered on these builds
         </h2>
         <p className="mt-4 max-w-2xl text-[15px] text-muted dark:text-dark-muted">
-          Visible product functionality only — no invented metrics, and no client brand naming.
+          Feature and development notes only — no client brand names, screenshots or live site links.
         </p>
 
         <div className="mt-10 space-y-5">
@@ -26,18 +25,9 @@ export default function CaseStudies() {
                 <h3 className="display mt-2 text-xl leading-tight sm:text-2xl">
                   {project.category}
                 </h3>
-                <p className="mt-2 text-xs font-medium text-muted dark:text-dark-muted">
+                <p className="mt-3 text-xs font-medium text-muted dark:text-dark-muted">
                   {project.role}
                 </p>
-                <a
-                  href={project.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-5 inline-flex items-center gap-1.5 rounded-lg border border-line bg-white px-3 py-2 text-xs font-medium transition hover:border-ink dark:border-dark-line dark:bg-dark-card dark:hover:border-paper/40"
-                >
-                  View Live Website
-                  <ArrowUpRight size={12} />
-                </a>
               </div>
 
               <div className="p-5 sm:p-6">
