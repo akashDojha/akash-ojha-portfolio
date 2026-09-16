@@ -11,17 +11,23 @@ export const site = {
   phone: "+91 8673877639",
   linkedin: "https://www.linkedin.com/in/akash-ojha-6a825b129/",
   github: "https://github.com/akashDojha",
-  resumePath: "/resume.pdf",
-  siteUrl: "https://[ADD-SITE-URL]",
+  resumePath: `${import.meta.env.BASE_URL}resume.pdf`,
+  siteUrl: "https://akashdojha.github.io/akash-ojha-portfolio",
+};
+
+/** Prefix public asset paths for GitHub Pages base. */
+export const asset = (path) => {
+  const clean = String(path || "").replace(/^\//, "");
+  return `${import.meta.env.BASE_URL}${clean}`;
 };
 
 export const navLinks = [
-  { href: "#about",      label: "About"      },
-  { href: "#expertise",  label: "Expertise"  },
-  { href: "#projects",   label: "Work"       },
-  { href: "#services",   label: "Services"   },
+  { href: "#about", label: "About" },
+  { href: "#expertise", label: "Expertise" },
+  { href: "#projects", label: "Work" },
+  { href: "#services", label: "Services" },
   { href: "#experience", label: "Experience" },
-  { href: "#contact",    label: "Contact"    },
+  { href: "#contact", label: "Contact" },
 ];
 
 /**

@@ -6,12 +6,11 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-line dark:border-dark-line">
-      <div className="mx-auto max-w-6xl px-5 py-10">
+      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-5">
         <div className="grid gap-8 sm:grid-cols-[1fr_auto]">
-          {/* Left */}
           <div>
             <div className="flex items-center gap-2.5">
-              <span className="grid h-8 w-8 place-items-center rounded-sm bg-ink font-mono text-[11px] text-paper dark:bg-paper dark:text-ink">
+              <span className="grid h-9 w-9 place-items-center rounded-lg bg-ink font-mono text-[11px] font-semibold text-paper dark:bg-[#e8ecf4] dark:text-ink">
                 AO
               </span>
               <div>
@@ -27,13 +26,13 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Right: links */}
-          <div className="flex flex-col gap-2 text-sm">
+          <div className="flex flex-col gap-2.5 text-sm">
             <a
               href={`mailto:${site.email}`}
               className="inline-flex items-center gap-2 text-muted transition hover:text-ink dark:text-dark-muted dark:hover:text-paper"
             >
-              <Mail size={13} /> {site.email}
+              <Mail size={13} />
+              <span className="truncate">{site.email}</span>
             </a>
             <a
               href={`tel:${site.phone.replace(/\s/g, "")}`}
@@ -62,12 +61,11 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-2 border-t border-line pt-6 dark:border-dark-line">
+        <div className="mt-8 flex flex-col gap-3 border-t border-line pt-6 dark:border-dark-line sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
           <p className="font-mono text-[10px] uppercase tracking-wider text-muted dark:text-dark-muted">
             © {year} {site.name}
           </p>
-          <div className="flex gap-4 font-mono text-[10px] uppercase tracking-wider text-muted dark:text-dark-muted">
+          <div className="flex flex-wrap gap-4 font-mono text-[10px] uppercase tracking-wider text-muted dark:text-dark-muted">
             <a href="#about" className="transition hover:text-ink dark:hover:text-paper">About</a>
             <a href="#projects" className="transition hover:text-ink dark:hover:text-paper">Work</a>
             <a href="#services" className="transition hover:text-ink dark:hover:text-paper">Services</a>

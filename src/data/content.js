@@ -141,7 +141,7 @@ export const processSteps = [
 ];
 
 export const reasons = [
-  { label: "6+", text: "Years WordPress experience" },
+  { label: "6+ years", text: "Years WordPress experience" },
   { label: "40+", text: "Websites developed and maintained" },
   { label: "Full stack", text: "Backend + frontend development" },
   { label: "Custom build", text: "Theme & plugin development" },

@@ -331,17 +331,29 @@ for (const job of jobs) {
   y -= 8;
 }
 
-// Projects
-sectionTitle("SELECTED PROFESSIONAL PROJECTS");
+// Projects — functionality only (no client brand names)
+sectionTitle("SELECTED WORK — FUNCTIONALITY");
 const projects = [
-  ["MaxCoil", "E-commerce / WordPress", "https://www.maxcoil.com.sg/"],
-  ["All In The Loop", "Event technology platform", "https://allintheloop.com/"],
-  ["AGD Global", "Gold & precious metals platform", "https://agdglobal.com.au/"],
-  ["TecLED", "Architectural lighting e-commerce", "https://tecled.com.au/"],
+  [
+    "E-commerce / Retail Platform",
+    "Product catalogue, filtering, cart, checkout, accounts, payments, promotions and search.",
+  ],
+  [
+    "Event Technology Platform",
+    "Event apps, exhibitor tools, lead retrieval, event management and responsive website delivery.",
+  ],
+  [
+    "Gold & Precious Metals Platform",
+    "Business website, investment content, customer services and enquiry pathways.",
+  ],
+  [
+    "Architectural Lighting Catalogue",
+    "Large product catalogue, categories, project galleries, enquiries and quote/request flows.",
+  ],
 ];
 
-for (const [name, label, url] of projects) {
-  page.drawText(name, {
+for (const [label, functionality] of projects) {
+  page.drawText(label, {
     x: CONTENT_X,
     y,
     size: 9,
@@ -349,18 +361,12 @@ for (const [name, label, url] of projects) {
     color: colors.ink,
   });
   y -= 11;
-  page.drawText(`${label}  ·  ${url}`, {
-    x: CONTENT_X,
-    y,
-    size: 7.5,
-    font,
-    color: colors.soft,
-  });
-  y -= 13;
+  bodyLines(functionality, 7.5, colors.soft, 10.5);
+  y -= 4;
 }
 
 bodyLines(
-  "Role on each project: professional WordPress development (backend & frontend contribution). Scope described factually — not claimed as sole product ownership.",
+  "Role on each engagement: professional WordPress development (backend & frontend). Client brand names intentionally omitted. Scope described factually — not claimed as sole product ownership.",
   7.5,
   colors.soft,
   10.5

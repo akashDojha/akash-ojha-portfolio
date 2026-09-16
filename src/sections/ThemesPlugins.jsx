@@ -1,105 +1,103 @@
+import {
+  Blocks,
+  Puzzle,
+  ShoppingCart,
+  Cable,
+  Settings2,
+  Workflow,
+} from "lucide-react";
 import { themePluginItems } from "../data/content";
 
-const codeA = `<?php
-/**
- * Register custom post type.
- * Generic pattern — not client code.
- */
-function ao_register_cpt() {
-  register_post_type( 'solution', [
-    'public'       => true,
-    'show_in_rest' => true,
-    'supports'     => [
-      'title', 'editor', 'thumbnail'
-    ],
-    'labels' => [
-      'name'          => 'Solutions',
-      'singular_name' => 'Solution',
-    ],
-  ] );
-}
-add_action( 'init', 'ao_register_cpt' );`;
+const icons = [Blocks, Puzzle, ShoppingCart, Cable, Settings2, Workflow];
 
-const codeB = `<?php
-// WooCommerce hook example
-add_filter(
-  'woocommerce_checkout_fields',
-  'ao_custom_checkout_fields'
-);
-
-function ao_custom_checkout_fields( $fields ) {
-  // add / modify fields
-  return $fields;
-}
-
-// REST endpoint
-register_rest_route( 'ao/v1', '/items',
-  [
-    'methods'  => 'GET',
-    'callback' => 'ao_get_items',
-    'permission_callback' => '__return_true',
-  ]
-);`;
+const capabilities = [
+  {
+    title: "Theme architecture",
+    body: "Template hierarchy, custom fields, and UI systems shaped around the product — not page-builder sprawl.",
+  },
+  {
+    title: "Plugin systems",
+    body: "Isolated business logic: CPTs, admin tools, hooks, and features that belong outside the theme.",
+  },
+  {
+    title: "Commerce extensions",
+    body: "WooCommerce behaviour beyond a default catalogue — checkout, accounts, and store rules.",
+  },
+];
 
 export default function ThemesPlugins() {
   return (
     <section className="border-t border-line dark:border-dark-line">
-      <div className="mx-auto max-w-6xl px-5 py-20">
+      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-5 sm:py-20">
         <p className="section-kicker">03 — Custom WordPress Themes &amp; Plugins</p>
-        <h2 className="display mt-3 max-w-3xl text-4xl leading-tight sm:text-5xl">
+        <h2 className="display mt-3 max-w-3xl text-[clamp(1.85rem,5vw,3rem)] leading-tight">
           Not just installing WordPress — I build custom WordPress solutions.
         </h2>
-        <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-muted dark:text-dark-muted">
-          I develop custom WordPress themes and plugins based on business requirements — custom
-          functionality, integrations, WooCommerce features and API-driven solutions that off-the-shelf
-          plugins can't deliver.
+        <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-muted dark:text-dark-muted">
+          Custom themes and plugins based on business requirements — functionality, integrations,
+          WooCommerce features and API-driven solutions that off-the-shelf plugins cannot deliver.
         </p>
 
-        {/* Main grid */}
-        <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_1fr]">
-          {/* Code panels */}
-          <div className="space-y-4">
-            <div className="overflow-hidden rounded-md border border-line shadow-md dark:border-dark-line">
-              <div className="flex items-center gap-2 border-b border-white/10 bg-[#1a1f18] px-3.5 py-2">
-                <span className="h-2 w-2 rounded-full bg-[#c46b2d]" />
-                <span className="h-2 w-2 rounded-full bg-[#c4b35a]" />
-                <span className="h-2 w-2 rounded-full bg-[#2f6b4f]" />
-                <span className="ml-2 font-mono text-[9px] text-white/40">custom-post-type.php</span>
-              </div>
-              <pre className="code-panel overflow-x-auto bg-[#0f1310] p-4 text-[#b8cfb9]">
-                <code>{codeA}</code>
-              </pre>
+        {/* Advanced capability visual */}
+        <div className="mt-10 overflow-hidden rounded-2xl border border-line bg-gradient-to-br from-[#0b1524] via-[#0f1c30] to-[#0d7377]/40 p-5 text-white shadow-xl sm:p-8 dark:border-dark-line">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-lg">
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#5ec4c7]">
+                Build approach
+              </p>
+              <h3 className="display mt-2 text-2xl sm:text-3xl">
+                Themes, plugins &amp; commerce as a system
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-white/70">
+                Clear separation between presentation, business logic and integrations — so products
+                stay maintainable after launch.
+              </p>
             </div>
-            <div className="overflow-hidden rounded-md border border-line shadow-md dark:border-dark-line">
-              <div className="flex items-center gap-2 border-b border-white/10 bg-[#1a1f18] px-3.5 py-2">
-                <span className="h-2 w-2 rounded-full bg-[#c46b2d]" />
-                <span className="h-2 w-2 rounded-full bg-[#c4b35a]" />
-                <span className="h-2 w-2 rounded-full bg-[#2f6b4f]" />
-                <span className="ml-2 font-mono text-[9px] text-white/40">woo-hooks.php</span>
-              </div>
-              <pre className="code-panel overflow-x-auto bg-[#0f1310] p-4 text-[#b8cfb9]">
-                <code>{codeB}</code>
-              </pre>
+            <div className="flex flex-wrap gap-2">
+              {["Custom Themes", "Custom Plugins", "WooCommerce", "REST APIs"].map((t) => (
+                <span
+                  key={t}
+                  className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider text-white/80"
+                >
+                  {t}
+                </span>
+              ))}
             </div>
-            <p className="font-mono text-[9px] uppercase tracking-widest text-muted dark:text-dark-muted">
-              Generic WordPress patterns — not client source code
-            </p>
           </div>
 
-          {/* Capability cards */}
-          <div className="grid content-start gap-3 sm:grid-cols-2">
-            {themePluginItems.map((item) => (
+          <div className="mt-8 grid gap-3 sm:grid-cols-3">
+            {capabilities.map((item, i) => (
               <article
                 key={item.title}
-                className="card-hover rounded-md border border-line bg-white p-4 dark:border-dark-line dark:bg-dark-card"
+                className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm transition hover:border-[#5ec4c7]/40 hover:bg-white/10"
               >
-                <h3 className="text-[13px] font-semibold">{item.title}</h3>
+                <p className="font-mono text-[10px] text-[#5ec4c7]">0{i + 1}</p>
+                <h4 className="mt-2 text-sm font-semibold">{item.title}</h4>
+                <p className="mt-2 text-xs leading-relaxed text-white/65">{item.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        {/* Capability grid */}
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {themePluginItems.map((item, i) => {
+            const Icon = icons[i % icons.length];
+            return (
+              <article
+                key={item.title}
+                className="card-hover rounded-xl border border-line bg-white p-5 dark:border-dark-line dark:bg-dark-card"
+              >
+                <span className="grid h-9 w-9 place-items-center rounded-lg border border-line bg-paper text-accent dark:border-dark-line dark:bg-dark">
+                  <Icon size={16} />
+                </span>
+                <h3 className="mt-3 text-[14px] font-semibold">{item.title}</h3>
                 <p className="mt-2 text-[13px] leading-relaxed text-muted dark:text-dark-muted">
                   {item.body}
                 </p>
               </article>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </div>
     </section>

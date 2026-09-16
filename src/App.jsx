@@ -37,7 +37,7 @@ export default function App() {
   }, [dark]);
 
   return (
-    <div className="min-h-screen bg-paper text-ink dark:bg-dark dark:text-[#eceae4]">
+    <div className="min-h-screen overflow-x-hidden bg-paper text-ink dark:bg-dark dark:text-[#e8ecf4]">
       <Navbar dark={dark} setDark={setDark} />
       <main>
         <Hero />
