@@ -1,6 +1,6 @@
 # Akash Ojha — Full-Stack WordPress Developer Portfolio
 
-Personal portfolio for **Akash Ojha**, Full-Stack WordPress Developer (backend and frontend) with 5.5+ years of experience building custom WordPress websites, WooCommerce platforms, plugins, themes and API integrations.
+Personal portfolio for **Akash Ojha**, Full-Stack WordPress Developer (backend and frontend) with 6+ years of experience building custom WordPress websites, WooCommerce platforms, plugins, themes and API integrations.
 
 > This is a **React + Vite + Tailwind CSS** portfolio site. It is **not** a WordPress theme.
 
