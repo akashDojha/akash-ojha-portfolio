@@ -1,19 +1,15 @@
 export const projects = [
   {
-    id: "maxcoil",
-    name: "MaxCoil",
-    title: "MaxCoil — E-commerce & Online Retail Platform",
+    id: "commerce-storefront",
     industry: "E-commerce / Retail",
-    category: "E-commerce / WordPress Development",
-    url: "https://www.maxcoil.com.sg/",
-    image: "/projects/maxcoil.png",
+    category: "Online storefront & commerce flows",
     shortDescription:
-      "Online retail experience with extensive product catalogue, product filtering, cart, checkout and payment functionality.",
+      "Online retail experience with product catalogue, filtering, cart, checkout and payment functionality.",
     description:
-      "Selected professional project for an online retail platform with an extensive product catalogue and full shopping experience — from category browsing and filtering through cart, checkout, customer accounts and payment.",
+      "Professional WordPress work on an online retail platform covering category browsing and filtering through cart, checkout, customer accounts and payment.",
     role: "WordPress Developer — Backend & Frontend Development",
     contribution:
-      "WordPress development contribution covering custom development and implementation across the storefront experience.",
+      "WordPress development across storefront experience, commerce flows and responsive UI implementation.",
     development: [
       "WordPress development",
       "WooCommerce-style e-commerce features",
@@ -29,7 +25,7 @@ export const projects = [
       "Product detail pages",
       "Shopping cart",
       "Checkout",
-      "Customer account functionality",
+      "Customer accounts",
       "Online payment",
       "Delivery / collection options",
       "Promotions",
@@ -38,20 +34,16 @@ export const projects = [
     technologies: ["WordPress", "WooCommerce", "E-commerce"],
   },
   {
-    id: "all-in-the-loop",
-    name: "All In The Loop",
-    title: "All In The Loop — Event Technology Platform",
+    id: "event-platform",
     industry: "Event Technology",
-    category: "Event Technology / Web Platform",
-    url: "https://allintheloop.com/",
-    image: "/projects/allintheloop.png",
+    category: "Event apps & platform features",
     shortDescription:
       "Event technology platform supporting custom event apps, exhibitors, lead retrieval and event experiences.",
     description:
       "Professional development work on an event technology website and platform ecosystem supporting event apps, attendee experiences, exhibitors and event management.",
     role: "WordPress Developer — Backend & Frontend Development",
     contribution:
-      "Professional WordPress development and implementation work supporting the website and platform ecosystem.",
+      "WordPress development and implementation supporting the website and platform ecosystem.",
     development: [
       "WordPress development",
       "Website implementation",
@@ -71,20 +63,16 @@ export const projects = [
     technologies: ["WordPress"],
   },
   {
-    id: "agd-global",
-    name: "AGD Global",
-    title: "AGD Global — Gold & Precious Metals Platform",
+    id: "metals-business",
     industry: "Gold / Precious Metals",
-    category: "Gold & Precious Metals / Business Platform",
-    url: "https://agdglobal.com.au/",
-    image: "/projects/agdglobal.png",
+    category: "Business platform & customer services",
     shortDescription:
       "Digital platform for a gold and precious-metals business focused on accessibility, transparency and customer services.",
     description:
-      "Selected professional project for a gold and precious-metals business website covering investment-focused content and customer services. Exact commercial results are not published here.",
+      "Professional WordPress work for a gold and precious-metals business website covering investment-focused content and customer services.",
     role: "WordPress Developer — Backend & Frontend Development",
     contribution:
-      "WordPress development contribution — custom development and implementation for the public-facing platform.",
+      "Custom WordPress development and implementation for the public-facing platform.",
     development: [
       "WordPress development",
       "Business website implementation",
@@ -100,20 +88,16 @@ export const projects = [
     technologies: ["WordPress"],
   },
   {
-    id: "tecled",
-    name: "TecLED",
-    title: "TecLED — Architectural Lighting E-commerce Platform",
+    id: "lighting-catalogue",
     industry: "E-commerce / Lighting",
-    category: "E-commerce / Lighting",
-    url: "https://tecled.com.au/",
-    image: "/projects/tecled.png",
+    category: "Product catalogue & enquiry system",
     shortDescription:
       "Large architectural lighting catalogue with product categories, projects, enquiries and quote functionality.",
     description:
-      "Selected professional project for an architectural lighting catalogue with product categories, project galleries, product enquiries and quote/request functionality.",
+      "Professional work on an architectural lighting catalogue with product categories, project galleries, product enquiries and quote/request functionality.",
     role: "WordPress Developer — Backend & Frontend Development",
     contribution:
-      "Professional development work spanning catalogue presentation, enquiry/quote flows and responsive frontend implementation.",
+      "Catalogue presentation, enquiry/quote flows and responsive frontend implementation.",
     development: [
       "WordPress development",
       "Product catalogue experience",
@@ -125,7 +109,7 @@ export const projects = [
       "Large lighting product catalogue",
       "Product categories",
       "Product pages",
-      "Projects",
+      "Project galleries",
       "Product enquiries",
       "Quote / request functionality",
       "Contact forms",

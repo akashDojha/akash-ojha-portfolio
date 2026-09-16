@@ -10,8 +10,8 @@ export default function Projects() {
           WordPress functionality delivered across professional builds.
         </h2>
         <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted dark:text-dark-muted">
-          Focused on what was built — catalogues, commerce flows, event tooling, enquiry systems and
-          responsive WordPress delivery. No client names, screenshots or external project links.
+          Information only — what was built and how it works. No client names, screenshots or
+          project links.
         </p>
 
         <div className="mt-10 grid gap-5 sm:gap-6 md:grid-cols-2">

@@ -9,7 +9,7 @@ export default function CaseStudies() {
           Functionality delivered on these builds
         </h2>
         <p className="mt-4 max-w-2xl text-[15px] text-muted dark:text-dark-muted">
-          Feature and development notes only — no client brand names, screenshots or live site links.
+          Feature and development notes only — no names, images or links.
         </p>
 
         <div className="mt-10 space-y-5">
